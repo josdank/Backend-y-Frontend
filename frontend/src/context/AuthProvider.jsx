@@ -1,9 +1,12 @@
 import axios from "axios";
-import { children, createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Auth from "../layout/Auth";
 
 // Creación del grupo de Whatsapp
 const AuthContext = createContext()
+    
+// Crear el mensaje (AuthProvider) // Integrantes(children)
+const AuthProvider = ({children}) =>{
     const [auth, setAuth] = useState({})
 
     const perfil = async (token) =>{
@@ -31,20 +34,19 @@ const AuthContext = createContext()
             perfil(token)
         }
     },[])
-// Crear el mensaje (AuthProvider) // Integrantes(children)
-const AuthProvider = ({children}) =>{
-    return <AuthContext.Provider value={
-        {
-            //Contenido del mensaje
-            auth,
-            setAuth
-        }
-    }/>
+    return (
+        <AuthContext.Provider value={
+            {
+                auth,
+                setAuth              
+            }
+        }>
+            {children}
+        </AuthContext.Provider>
+    )
 }
-
 export {
     AuthProvider
 }
 export default AuthContext
-
 
