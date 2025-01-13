@@ -10,16 +10,16 @@ export const CardPerfil = () => {
                 <p>Nombre: </p>
             </div>
             <div className="self-start">
-                <p>Nombre: </p>
+                <p>Apellido: </p>
             </div >
             <div className="self-start">
-                <p>Nombre: </p>
+                <p>Dirección: </p>
             </div>
             <div className="self-start">
-                <p>Nombre: </p>
+                <p>Teléfono: </p>
             </div>
             <div className="self-start">
-                <p>Nombre: </p>
+                <p>Email: </p>
             </div>
             <div className="self-start">
                 <p>Nombre: </p>
