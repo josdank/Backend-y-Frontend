@@ -5,13 +5,11 @@ import Veterinario from '../models/Veterinario.js'
 import Paciente from '../models/Paciente.js'
 
 
-
-
 // Método para proteger rutas
 const verificarAutenticacion = async (req,res,next)=>{
 
     // Validación si se está enviando el token
-if(!req.headers.authorization) return res.status(404).json({msg:"Lo sentimos, debes proprocionar un token"})  
+    if(!req.headers.authorization) return res.status(404).json({msg:"Lo sentimos, debes proprocionar un token"})  
 
     // Desestructurar el token pero del headers
     const {authorization} = req.headers
@@ -20,9 +18,6 @@ if(!req.headers.authorization) return res.status(404).json({msg:"Lo sentimos, de
 
     // Capturar errores
     try {
-
-        
-
 
         // verificar el token recuperado con el almacenado 
         const {id,rol} = jwt.verify(authorization.split(' ')[1],process.env.JWT_SECRET)
