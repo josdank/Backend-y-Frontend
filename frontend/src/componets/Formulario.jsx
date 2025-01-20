@@ -16,7 +16,7 @@ export const Formulario = ({paciente}) => {
         celular: paciente?.celular ??"",
         salida:  new Date(paciente?.salida).toLocaleDateString('en-CA', {timeZone: 'UTC'}) ?? "",
         convencional: paciente?.convencional ??"",
-        sintomas: paciente?.sintomas ??""
+        sintomas: paciente?.sintomas ?? ""
 })
 
     const handleChange = (e) => {
@@ -164,7 +164,7 @@ export const Formulario = ({paciente}) => {
                     className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5'
                     placeholder='Ingrese los síntomas de la mascota'
                     name='sintomas'
-                    value={form.sinromas}
+                    value={form.sintomas}
                     onChange={handleChange}
                 />
             </div>
@@ -175,6 +175,10 @@ export const Formulario = ({paciente}) => {
                     text-slate-300 uppercase font-bold rounded-lg 
                     hover:bg-gray-900 cursor-pointer transition-all'
                     value={paciente?._id ? 'Actualizar paciente' : 'Registrar paciente'} />
+
+            <button className=" bg-gray-600 w-full p-3 
+                    text-slate-300 uppercase font-bold rounded-lg 
+                    hover:bg-gray-900 cursor-pointer transition-al mt-4" onClick={() => navigate(`/dashboard/listar`)}>Regresar</button>
 
         </form>
     )
