@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { MdDeleteForever, MdNoteAdd, MdInfo } from "react-icons/md";
 import axios from 'axios';
 import Mensaje from "./Alertas/Mensaje";
+import AuthContext from "../context/AuthProvider";
 
 const Tabla = () => {
-
+    const { auth } = useContext(AuthContext)
     const navigate = useNavigate()
 
     // Paso 1
@@ -93,6 +94,20 @@ const Tabla = () => {
                                             className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
                                             onClick={() => navigate(`/dashboard/visualizar/${paciente._id}`)}
                                             />
+                                            {
+                                                auth.rol === "veterinario" &&
+                                                (
+                                                    <>
+                                                    <MdInfo className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2" 
+                                                    onClick={() => navigate(`/dashboard/actualizar/${paciente._id}`)} 
+                                                    />
+                                        
+                                                    <MdDeleteForever className="h-7 w-7 text-red-900 cursor-pointer inline-block" 
+                                                    onClick={() => { handleDelete(paciente._id) }}
+                                                    />
+                                                    </>
+                                                )
+                                            }
 
                                             <MdInfo 
                                             className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2" 
