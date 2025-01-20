@@ -81,7 +81,6 @@ const listarPacientes = async (req,res)=>{
     // Mostrar campos de documentos relacionados
     const pacientes = await Paciente.find({estado:true}).where('veterinario').equals(req.veterinarioBDD).select("-salida -createdAt -updatedAt -__v").populate('veterinario','_id nombre apellido')
     // Respuesta 
-    res.status(200).json(pacientes)
 }
 
 
