@@ -3,18 +3,19 @@ import TratamientosContext from "../../context/TratamientosProvider"
 
 const ModalTratamiento = ({ idPaciente }) => {
 
-    const {setModal,handleModal,registrarTratamientos} = useContext(TratamientosContext)
+    const { setModal, handleModal, registrarTratamientos } = useContext(TratamientosContext)
 
     const [form, setform] = useState({
         nombre: "",
         descripcion: "",
         prioridad: "",
-        paciente:idPaciente
+        paciente: idPaciente
     })
 
     const handleChange = (e) => {
-        setform({...form,
-            [e.target.name]:e.target.value
+        setform({
+            ...form,
+            [e.target.name]: e.target.value
         })
     }
 
@@ -43,24 +44,24 @@ const ModalTratamiento = ({ idPaciente }) => {
                     />
                 </div>
                 <div>
-                <label
-                    htmlFor='descripcion:'
-                    className='text-white uppercase font-bold text-sm'>Descripción: </label>
-                <textarea
-                    id='descripcion'
-                    type="text"
-                    className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5'
-                    placeholder='Descripción del tratamiento'
-                    name='descripcion'
-                    value={form.descripcion}
-                    onChange={handleChange}
-                />
+                    <label
+                        htmlFor='descripcion:'
+                        className='text-white uppercase font-bold text-sm'>Descripción: </label>
+                    <textarea
+                        id='descripcion'
+                        type="text"
+                        className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5'
+                        placeholder='Descripción del tratamiento'
+                        name='descripcion'
+                        value={form.descripcion}
+                        onChange={handleChange}
+                    />
                 </div>
 
                 <div>
-                <label
-                    htmlFor='prioridad:'
-                    className='text-white uppercase font-bold text-sm'>Prioridad: </label>
+                    <label
+                        htmlFor='prioridad:'
+                        className='text-white uppercase font-bold text-sm'>Prioridad: </label>
                     <select
                         id='prioridad'
                         className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5'
@@ -71,7 +72,7 @@ const ModalTratamiento = ({ idPaciente }) => {
                         <option value="Baja">Baja</option>
                         <option value="Media">Media</option>
                         <option value="Alta">Alta</option>
-                        
+
                     </select>
                 </div>
 
@@ -88,13 +89,13 @@ const ModalTratamiento = ({ idPaciente }) => {
                 </div>
                 <div className='flex justify-center gap-5'>
                     <input
-                    type="submit"
-                    className='bg-green-700 px-6 
+                        type="submit"
+                        className='bg-green-700 px-6 
                     text-slate-300 rounded-lg 
                     hover:bg-green-900 cursor-pointer'
-                    value='Registrar' />
+                        value='Registrar' />
 
-                    <button className="sm:w-auto leading-3 text-center text-white px-6 py-4 rounded-lg bg-red-700 hover:bg-red-900"onClick={handleModal}>Cancelar</button>
+                    <button className="sm:w-auto leading-3 text-center text-white px-6 py-4 rounded-lg bg-red-700 hover:bg-red-900" onClick={handleModal}>Cancelar</button>
                 </div>
 
             </form>
