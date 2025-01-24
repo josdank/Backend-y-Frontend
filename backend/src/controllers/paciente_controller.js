@@ -67,7 +67,8 @@ const perfilPaciente =(req,res)=>{
 
 // Método para listar todos los pacientes
 const listarPacientes = async (req,res)=>{
-    if (req.pacienteBDD && "propietario" in req.pacienteBDD){
+    if (req.pacienteBDD && "propietario" in req.pacienteBDD)
+        {
         const pacientes = await Paciente.find(req.pacienteBDD._id).select("-salida -createdAt -updatedAt -__v").populate('veterinario','_id nombre apellido')
         res.status(200).json(pacientes)
     }
@@ -75,12 +76,6 @@ const listarPacientes = async (req,res)=>{
         const pacientes = await Paciente.find({estado:true}).where('veterinario').equals(req.veterinarioBDD).select("-salida -createdAt -updatedAt -__v").populate('veterinario','_id nombre apellido')
         res.status(200).json(pacientes)
     }
-    // Obtener todos los pacientes que se enceuntren activos
-    // Que sean solo los del paciente que inicie sesión
-    // Quitar campos no necesarios 
-    // Mostrar campos de documentos relacionados
-    const pacientes = await Paciente.find({estado:true}).where('veterinario').equals(req.veterinarioBDD).select("-salida -createdAt -updatedAt -__v").populate('veterinario','_id nombre apellido')
-    // Respuesta 
 }
 
 
