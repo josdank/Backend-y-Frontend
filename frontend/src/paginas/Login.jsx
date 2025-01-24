@@ -1,55 +1,46 @@
 import { useContext, useState } from 'react'
-import {Link} from 'react-router-dom'
 import AuthContext from '../context/AuthProvider'
+import {Link, useNavigate} from 'react-router-dom'
+import { ToastContainer, toast} from 'react-toastify'
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-
-
 
 const Login = () => {
-    
+
     const navigate = useNavigate()
 
-    const {setAuth} = useContext (AuthContext)
-    // Paso 1
+    const {setAuth} = useContext(AuthContext)
 
-    const [form, setForm] = useState ({
+    //Paso 1
+    const [form, setForm] = useState({
         email:"",
         password:""
     })
 
-    // Paso 2
-
+    //Paso 2
     const handleChange = (e) => {
-      setForm({
-        ...form,
-        [e.target.name]:e.target.value
-
-      })
+        setForm({
+            ...form,
+            [e.target.name]:e.target.value
+        })
     }
-    
-    // Paso 3
 
+    //Paso 3
     const handleSubmit = async (e) => {
-      e.preventDefault()
-      const url = form.password.includes("vet")
+        e.preventDefault()
+        const url = form.password.includes("vet")
             ? `${import.meta.env.VITE_BACKEND_URL}/paciente/login`
             : `${import.meta.env.VITE_BACKEND_URL}/login`
-      try {
+        try {
             const respuesta = await axios.post(url, form)
             localStorage.setItem('token', respuesta.data.token)
+            localStorage.setItem('rol', respuesta.data.rol)
             setAuth(respuesta.data)
             navigate('/dashboard')
-            console.log(respuesta)
-            toast.success(respuesta.data.msg)
-
         } catch (error) {
-            console.log(error)
-            toast.error(error.response.data.msg)
+            toast.error(error.response.data?.msg)
         }
     }
-    
+
     return (
         <>
             <ToastContainer/>
@@ -69,12 +60,20 @@ const Login = () => {
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label className="mb-2 block text-sm font-semibold">Email</label>
-                            <input type="email" name='email' value={form.email} onChange={handleChange} placeholder="Enter you email" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-2 text-gray-500" />
+                            <input type="email" 
+                            name='email'
+                            value={form.email}
+                            onChange={handleChange}
+                            placeholder="Enter you email" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-2 text-gray-500" />
                         </div>
 
                         <div className="mb-3">
                             <label className="mb-2 block text-sm font-semibold">Password</label>
-                            <input type="password" name='password' value={form.password} onChange={handleChange} placeholder="********" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-2 text-gray-500" />
+                            <input type="password" 
+                            name='password'
+                            value={form.password}
+                            onChange={handleChange}
+                            placeholder="********************" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-2 text-gray-500" />
                         </div>
 
                         <div className="my-4">
