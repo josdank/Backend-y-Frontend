@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useState, useContext } from "react";
 import { MdDeleteForever, MdNoteAdd, MdInfo } from "react-icons/md";
 import axios from 'axios';
-import Mensaje from "./Alertas/Alertas";
-import { useNavigate } from 'react-router-dom'
+import Mensaje from "./Alertas/Mensaje";
 import AuthContext from "../context/AuthProvider";
 
 
