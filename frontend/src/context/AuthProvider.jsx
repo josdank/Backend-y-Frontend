@@ -1,92 +1,92 @@
-import axios from "axios";
-import { createContext, useEffect, useState } from "react";
-import Auth from "../layout/Auth";
+import axios from 'axios'
+import { createContext, useEffect, useState } from 'react'
 
-const AuthContext = createContext();
+const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState({});
-    const [loading, setLoading] = useState(true);
-
+    const [auth, setAuth] = useState({})
     const perfil = async (token) => {
+        const rol = localStorage.getItem('rol') 
+        ? localStorage.getItem('rol')
+        : `paciente`
+
+        const url = rol == "veterinario"
+           ? `${import.meta.env.VITE_BACKEND_URL}/perfil`
+           : `${import.meta.env.VITE_BACKEND_URL}/paciente/perfil`
         try {
-            const url = `${import.meta.env.VITE_BACKEND_URL}/perfil/`;
             const options = {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
                 }
-            };
-            const respuesta = await axios.get(url, options);
-            setAuth(respuesta.data);
+            }
+            const respuesta = await axios.get(url, options)
+            respuesta.data.rol = rol
+            setAuth(respuesta.data)
         } catch (error) {
-            console.log(error);
-            toast.error(error.response.data.msg);
-        } finally {
-            setLoading(false);
+            console.log(error)
         }
-    };
+    }
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (token) {
+            perfil(token)
+        }
+    }, [])
 
     const actualizarPerfil = async (datos) => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token')
         try {
-            const url = `${import.meta.env.VITE_BACKEND_URL}/veterinario/${datos.id}`;
+            const url = `${import.meta.env.VITE_BACKEND_URL}/veterinario/${datos.id}`
             const options = {
                 headers: {
                     method: 'PUT',
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
                 }
-            };
-            const respuesta = await axios.put(url, datos, options);
-            perfil(token);
-            return { respuesta: respuesta.data.msg, tipo: true };
+            }
+            const respuesta = await axios.put(url, datos, options)
+            perfil(token)
+            return { respuesta: respuesta.data.msg, tipo: true }
         } catch (error) {
-            return { respuesta: error.response.data.msg, tipo: false };
+            return { respuesta: error.response.data.msg, tipo: false }
         }
-    };
+    }
 
     const actualizarPassword = async (datos) => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token')
         try {
-            const url = `${import.meta.env.VITE_BACKEND_URL}/veterinario/actualizarpassword`;
+            const url = `${import.meta.env.VITE_BACKEND_URL}/veterinario/actualizarpassword`
             const options = {
                 headers: {
                     method: 'PUT',
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
                 }
-            };
-            const respuesta = await axios.put(url, datos, options);
-            return { respuesta: respuesta.data.msg, tipo: true };
+            }
+            const respuesta = await axios.put(url, datos, options)
+            return { respuesta: respuesta.data.msg, tipo: true }
         } catch (error) {
-            return { respuesta: error.response.data.msg, tipo: false };
+            return { respuesta: error.response.data.msg, tipo: false }
         }
-    };
+    }
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            perfil(token);
-        } else {
-            setLoading(false);
-        }
-    }, []);
 
-    return (
-        <AuthContext.Provider value={{
+    return <AuthContext.Provider value={
+        {
+            //Contenido del mensaje
             auth,
             setAuth,
             actualizarPerfil,
-            actualizarPassword,
-            loading
-        }}>
-            {children}
-        </AuthContext.Provider>
-    );
-};
+            actualizarPassword
+        }
+    }>
+        {children}
+    </AuthContext.Provider>
+}
 
 export {
     AuthProvider
-};
-export default AuthContext;
+}
+
+export default AuthContext
